@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
  <html>
  <head>
    <meta charset="utf-8">
@@ -23,39 +23,60 @@
  </head>
  <body>
 	<div id="Content">
-		<div id="Title">Play Song with Set Loop Points</div>
+		<div id="Title">Play Song up Until Loop, then Exit Loop (Alpha Beta Gaga, by Air)</div>
 	</div>
 
  	<script>
-
+		var cont = 0 ;
+		var i = 0;
+		var loop;
+		var len1 = 1.0;
+		var len2 = 1.0;
+		var len3 = 1.0;
+		var buttonA;
+		var buttonB;
  		//the player//
- 		var player = new Tone.Player({
- 			"url" : "./audio/123.mp3",
- 			"loop" : false,
-			"retrigger" : true
+ 		var player1 = new Tone.Player({
+ 			"url" : "./audio/a1.mp3"
  		}).toMaster();
+		player1.sync();
+ 		var player2 = new Tone.Player({
+ 			"url" : "./audio/a2.mp3",
+			loop : true
+ 		}).toMaster();
+		player2.sync();
+ 		var player3 = new Tone.Player({
+ 			"url" : "./audio/a3.mp3"
+ 		}).toMaster();
+		player3.sync();
+		
  		// GUI //
 
  		Interface.Loader();
 
- 		Interface.Button({
- 			text : "Play Beginning Section and Enter Loop",
+ 		buttonA = Interface.Button({
+ 			text : "Start",
  			start : function(){
+				cont = 0;
+				player1.start();
+				loop = new Tone.Loop(function(time){
+					player2.restart();
+					i++;
+					console.log(i);
+					buttonB.background = 'orange';
+				}, len2).start(len1);
 				Tone.Transport.start();
-				//wait until the player is in the section to loop, and then turn looping on
-				Tone.Transport.schedule(function(time){
-					player.setLoopPoints(1.0,2.0);
-					player.loop = true;
-				}, Tone.Transport.seconds + 1.05);
- 				player.start();
  			}
  		});
- 		Interface.Button({
+		
+ 		buttonB = Interface.Button({
  			text : "Exit Loop and Play Until End",
  			start : function(){
-				//turn looping off--the player should continue playing past the loop point??
-				player.loop = false;
- 			}
+				loop.cancel();
+				player2.stop(len1 + i*len2);
+				player3.start(len1 + i*len2);
+ 			},
+			fill : '#333'
  		});
  	</script>
 
