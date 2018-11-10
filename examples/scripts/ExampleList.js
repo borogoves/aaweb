@@ -1,8 +1,8 @@
 var ExampleList = {
 	"Dave" : {
-		"ABG" : "abg",
-		"Strumming" : "strumming",
-		"Transport Test" : "transport"
+		"Alpha Beta Gaga" : "abg",
+		"Guitar Song" : "strumming",
+		"Demo" : "transport"
 	},
 	"Basic" : {
 		"Oscillators" : "oscillator",
