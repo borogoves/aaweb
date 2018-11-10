@@ -1,0 +1,82 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+   <meta charset="utf-8">
+ 	<title>PLAYER</title>
+
+ 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+ 	<link rel="icon" type="image/png" sizes="174x174" href="./style/favicon.png">
+	
+ 	<script src="../build/Tone.js"></script>
+ 	<script src="./scripts/jquery.min.js"></script>
+ 	<script src="./scripts/draggabilly.js"></script>
+ 	<script src="./scripts/StartAudioContext.js"></script>
+ 	<script src="./scripts/Interface.js"></script>
+ 	<script src="https://tonejs.github.io/Logo/build/Logo.js"></script>
+
+ 	<link rel="stylesheet" type="text/css" href="./style/examples.css">
+
+ </head>
+ <body>
+
+ 	<script>
+
+ 		//the players
+ 		var player1 = new Tone.Player({
+ 			"url" : "./audio/loop/drone.mp3",
+ 			"loop" : true,
+			"retrigger" : true
+ 		}).toMaster();
+		player1.setLoopPoints(0.0,5.0);
+ 		// GUI //
+
+ 		Interface.Loader();
+
+ 		Interface.Button({
+ 			text : "Start",
+ 			start : function(){
+				Tone.Transport.start();
+ 				player1.start();
+ 			}
+ 		});
+ 		Interface.Button({
+ 			text : "Continue",
+ 			start : function(){
+				player1.loop = false;
+				console.log("BUTTON PRESS at " + Tone.Transport.seconds + " s");
+				Tone.Transport.schedule(function(time){
+					player1.setLoopPoints(7.395,14.796);
+					player1.loop = true;
+				}, Tone.Transport.seconds + 7.0);
+ 			}
+ 		});
+ 		Interface.Button({
+ 			text : "Continue",
+ 			start : function(){
+				player1.loop = false;
+				console.log("BUTTON PRESS at " + Tone.Transport.seconds + " s");
+				Tone.Transport.schedule(function(time){
+					player1.setLoopPoints(14.796,22.186);
+					player1.loop = true;
+				}, Tone.Transport.seconds + 7.0);
+ 			}
+ 		});
+ 		Interface.Button({
+ 			text : "Continue",
+ 			start : function(){
+				player1.loop = false;
+				player1.setLoopPoints(14.796,26.7);
+				console.log("BUTTON PRESS at " + Tone.Transport.seconds + " s");
+ 			}
+ 		});
+ 		Interface.Button({
+ 			text : "Stop",
+ 			start : function(){
+ 				player1.stop();
+				Tone.Transport.stop();
+ 			}
+ 		});
+ 	</script>
+
+ </body>
+ </html>
